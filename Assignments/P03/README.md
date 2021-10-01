@@ -12,7 +12,7 @@
 > in the file are byte addresses. The data file has 1 million addresses. Your program will<br>
 > accept several records of input data, according to the following format.<br>
 >
-> - **Hints:** An example of the analysis,
+> - **Hints:** An example of the analysis:
 > - assuming only 10 pages were read and they were 1,9,2,1,1,1,9,3,1,9, would
 > - result in total pages used 4 (pages 1,2,3 and 9) and average number of accesses was 2.5
 
