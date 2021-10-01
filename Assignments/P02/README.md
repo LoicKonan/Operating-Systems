@@ -22,4 +22,4 @@
 
 |   #   | File                 | Description |
 | :---: | -------------------- | ----------- |
-|   1   | [main.cpp](main.cpp) | Solution    |
+|   1   | [main.c](main.c) | Solution    |
