@@ -20,5 +20,5 @@
 
 |   #   | File                   | Description |
 | :---: | ---------------------- | ----------- |
-|   1   | [main.asm](main.asm)   | Solution    |
+|   1   | [main.cpp](main.cpp)   | Solution    |
 |   2   | [spice.txt](spice.txt) | file        |
