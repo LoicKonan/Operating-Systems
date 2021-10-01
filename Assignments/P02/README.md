@@ -20,6 +20,6 @@
 
 ### Files
 
-|   #   | File                 | Description |
-| :---: | -------------------- | ----------- |
+|   #   | File             | Description |
+| :---: | ---------------- | ----------- |
 |   1   | [main.c](main.c) | Solution    |
