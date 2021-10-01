@@ -15,6 +15,10 @@
 > boundary of the file sections. Each child will report<br>
 > how many time the pair of characters was found in its searched area.<br>
 > When detecting a / in the position of a new command, the program should stop running.
+>
+> - **Hints:** An example of printing command in C language for an integer number x
+is
+> - printf(“text %d”,x);
 
 ### Files
 
