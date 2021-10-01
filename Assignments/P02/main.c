@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+
 int TOTAL = 0;
 int array[4000];
 void *count(void *tid)

@@ -1,5 +1,5 @@
-//Mini Project 1
-//David Hawkins, Loic Konan, Sarah Gilliland
+// Mini Project 1
+// David Hawkins, Loic Konan, Sarah Gilliland
 
 #include<sys/types.h>
 #include<stdio.h>
