@@ -2,8 +2,6 @@
 //David Hawkins, Loic Konan, Sarah Gilliland
 
 #include<sys/types.h>
-#include<sys/wait.h>
-#include<unistd.h>
 #include<stdio.h>
 #include<fcntl.h>
 #include<stdlib.h>
