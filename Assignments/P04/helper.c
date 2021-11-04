@@ -15,7 +15,7 @@ int mat_A[MAX], mat_B[MAX], sum[MAX], sub[MAX], mul[MAX], div[MAX];
 // Addition of a Matrix
 void* addition(void* arg)
 {
-	int i, j;
+	int i;
 	int core = (int)arg;
 
 	// Each thread computes 1/4 th of matrix addition
@@ -34,7 +34,7 @@ void* addition(void* arg)
 // Subtraction of a Matrix
 void* subtraction(void* arg)
 {
-	int i, j;
+	int i;
 	int core = (int)arg;
 
 	// Each thread computes 1/4th of matrix subtraction
@@ -53,7 +53,7 @@ void* subtraction(void* arg)
 // Multiplication of a Matrix
 void* multiplication(void* arg)
 {
-	int i, j;
+	int i;
 	int core = (int)arg;
 
 	// Each thread computes 1/4th of matrix Multiplication
@@ -72,7 +72,7 @@ void* multiplication(void* arg)
 // Division of a Matrix
 void* division(void* arg)
 {
-	int i, j;
+	int i;
 	int core = (int)arg;
 
 	// Each thread computes 1/4th of matrix Division
@@ -92,16 +92,12 @@ void* division(void* arg)
 int main()
 {
 	int i, j, step = 0;
-	// Generating random values in mat_A and mat_B
+
+	// Generating values in mat_A and mat_B
 	for (i = 0; i < MAX; i++) 
     {
-		for (j = 0; j < MAX; j++) 
-        {
-			mat_A[i] = 1;
-			mat_B[i] = 2;
-
-		}
-
+		mat_A[i] = 1;
+		mat_B[i] = 2;
 	}
 
 
