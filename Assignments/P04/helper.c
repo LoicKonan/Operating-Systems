@@ -10,7 +10,7 @@
 
 // Maximum threads is equal to total core of system
 pthread_t thread[CORE * 2];
-int mat_A[MAX][MAX], mat_B[MAX][MAX], sum[MAX][MAX], sub[MAX][MAX];
+int mat_A[MAX], mat_B[MAX], sum[MAX], sub[MAX];
 
 // Addition of a Matrix
 void* addition(void* arg)
@@ -24,13 +24,12 @@ void* addition(void* arg)
 		for (j = 0; j < MAX; j++) 
         {
 			// Compute Sum Row wise
-			sum[i][j] = mat_A[i][j] + mat_B[i][j];
+			sum[i] = mat_A[i] + mat_B[i];
 		}
 
 	}
 
 }
-
 
 // Subtraction of a Matrix
 void* subtraction(void* arg)
@@ -44,13 +43,12 @@ void* subtraction(void* arg)
 		for (j = 0; j < MAX; j++) 
         {
 			// Compute Subtract row wise
-			sub[i][j] = mat_A[i][j] - mat_B[i][j];
+			sub[i] = mat_A[i] - mat_B[i];
 		}
 
 	}
 
 }
-
 
 // Driver Code
 int main()
@@ -61,8 +59,8 @@ int main()
     {
 		for (j = 0; j < MAX; j++) 
         {
-			mat_A[i][j] = rand() % 10;
-			mat_B[i][j] = rand() % 10;
+			mat_A[i] = 1;
+			mat_B[i] = 2;
 
 		}
 
@@ -77,7 +75,7 @@ int main()
 		for (j = 0; j < MAX; j++) 
         {
 
-			printf("%d ", mat_A[i][j]);
+			printf("%d ", mat_A[i]);
 		}
 
 		printf("\n");
@@ -90,7 +88,7 @@ int main()
     {
 		for (j = 0; j < MAX; j++) 
         {
-			printf("%d ", mat_B[i][j]);
+			printf("%d ", mat_B[i]);
 		}
 
 		printf("\n");
@@ -119,7 +117,7 @@ int main()
     {
 		for (j = 0; j < MAX; j++) 
         {
-			printf("%d ", sum[i][j]);
+			printf("%d ", sum[i]);
 		}
 
 		printf("\n");
@@ -132,7 +130,7 @@ int main()
     {
 		for (j = 0; j < MAX; j++) 
         {
-			printf("%d ", sub[i][j]);
+			printf("%d ", sub[i]);
 		}
 
 		printf("\n");
