@@ -10,7 +10,7 @@
 
 // Maximum threads is equal to total core of system
 pthread_t thread[CORE * 2];
-int mat_A[MAX], mat_B[MAX], sum[MAX], sub[MAX];
+int mat_A[MAX], mat_B[MAX], sum[MAX], sub[MAX], mul[MAX], div[MAX];
 
 // Addition of a Matrix
 void* addition(void* arg)
@@ -44,6 +44,44 @@ void* subtraction(void* arg)
         {
 			// Compute Subtract row wise
 			sub[i] = mat_A[i] - mat_B[i];
+		}
+
+	}
+
+}
+
+// Multiplication of a Matrix
+void* multiplication(void* arg)
+{
+	int i, j;
+	int core = (int)arg;
+
+	// Each thread computes 1/4th of matrix Multiplication
+	for (i = core * MAX / 4; i < (core + 1) * MAX / 4; i++) 
+    {
+		for (j = 0; j < MAX; j++) 
+        {
+			// Compute Multiplication row wise
+			sub[i] = mat_A[i] * mat_B[i];
+		}
+
+	}
+
+}
+
+// Division of a Matrix
+void* division(void* arg)
+{
+	int i, j;
+	int core = (int)arg;
+
+	// Each thread computes 1/4th of matrix Division
+	for (i = core * MAX / 4; i < (core + 1) * MAX / 4; i++) 
+    {
+		for (j = 0; j < MAX; j++) 
+        {
+			// Compute Division row wise
+			sub[i] = mat_A[i] / mat_B[i];
 		}
 
 	}
