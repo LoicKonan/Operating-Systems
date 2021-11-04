@@ -15,17 +15,14 @@ int mat_A[MAX][MAX], mat_B[MAX][MAX], sum[MAX][MAX], sub[MAX][MAX];
 // Addition of a Matrix
 void* addition(void* arg)
 {
-
 	int i, j;
 	int core = (int)arg;
 
-	// Each thread computes 1/4th of matrix addition
+	// Each thread computes 1/4 th of matrix addition
 	for (i = core * MAX / 4; i < (core + 1) * MAX / 4; i++) 
     {
-
 		for (j = 0; j < MAX; j++) 
         {
-
 			// Compute Sum Row wise
 			sum[i][j] = mat_A[i][j] + mat_B[i][j];
 		}
@@ -38,17 +35,14 @@ void* addition(void* arg)
 // Subtraction of a Matrix
 void* subtraction(void* arg)
 {
-
 	int i, j;
 	int core = (int)arg;
 
 	// Each thread computes 1/4th of matrix subtraction
 	for (i = core * MAX / 4; i < (core + 1) * MAX / 4; i++) 
     {
-
 		for (j = 0; j < MAX; j++) 
         {
-
 			// Compute Subtract row wise
 			sub[i][j] = mat_A[i][j] - mat_B[i][j];
 		}
@@ -61,15 +55,12 @@ void* subtraction(void* arg)
 // Driver Code
 int main()
 {
-
 	int i, j, step = 0;
 	// Generating random values in mat_A and mat_B
 	for (i = 0; i < MAX; i++) 
     {
-
 		for (j = 0; j < MAX; j++) 
         {
-
 			mat_A[i][j] = rand() % 10;
 			mat_B[i][j] = rand() % 10;
 
@@ -83,7 +74,6 @@ int main()
 
 	for (i = 0; i < MAX; i++) 
     {
-
 		for (j = 0; j < MAX; j++) 
         {
 
@@ -98,10 +88,8 @@ int main()
 
 	for (i = 0; i < MAX; i++) 
     {
-
 		for (j = 0; j < MAX; j++) 
         {
-
 			printf("%d ", mat_B[i][j]);
 		}
 
