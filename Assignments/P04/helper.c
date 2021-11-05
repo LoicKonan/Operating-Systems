@@ -1,174 +1,171 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
 
-// Value depend on System core
-#define CORE 4
+#define MAT_SIZE 10
+#define MAX_THREADS 4
 
-// Maximum matrix size
-#define MAX 4
+int i,j,k;           			 // Parameters For Rows And Columns
+int matrix1[MAT_SIZE][MAT_SIZE]; //First Matrix
+int matrix2[MAT_SIZE][MAT_SIZE]; //Second Matrix
+int result [MAT_SIZE][MAT_SIZE]; //Multiplied Matrix
 
-// Maximum threads is equal to total core of system
-pthread_t thread[MAX];
-int mat_A[MAX], mat_B[MAX], sum[MAX], sub[MAX], mul[MAX], div[MAX];
-
-// Addition of a Matrix
-void* addition(void* arg)
+//Type Defining For Passing Function Argumnents
+typedef struct parameters 
 {
-	int i;
-	int core = (int)arg;
+    int x,y;
+}args;
 
-	// Each thread computes 1/4 th of matrix addition
-	for (i = core * MAX / 4; i < (core + 1) * MAX / 4; i++) 
-    {
-		for (j = 0; j < MAX; j++) 
-        {
-			// Compute Sum Row wise
-			sum[i] = mat_A[i] + mat_B[i];
-		}
-
-	}
-
+// Function For Calculate Each Element in Result Matrix Used By Threads - - -//
+void* mult(void* arg)
+{    
+    args* p = arg;
+    
+    // Calculating Each Element in Result Matrix Using Passed Arguments
+    for(int a = 0; a < j;a++)
+	{
+        result[p->x][p->y] += matrix1[p->x][a]*matrix2[a][p->y];
+    }
+    sleep(3);
+    
+    // End Of Thread
+    pthread_exit(0);
 }
 
-// Subtraction of a Matrix
-void* subtraction(void* arg)
-{
-	int i;
-	int core = (int)arg;
 
-	// Each thread computes 1/4th of matrix subtraction
-	for (i = core * MAX / 4; i < (core + 1) * MAX / 4; i++) 
-    {
-		for (j = 0; j < MAX; j++) 
-        {
-			// Compute Subtract row wise
-			sub[i] = mat_A[i] - mat_B[i];
-		}
-
-	}
-
-}
-
-// Multiplication of a Matrix
-void* multiplication(void* arg)
-{
-	int i;
-	int core = (int)arg;
-
-	// Each thread computes 1/4th of matrix Multiplication
-	for (i = core * MAX / 4; i < (core + 1) * MAX / 4; i++) 
-    {
-		for (j = 0; j < MAX; j++) 
-        {
-			// Compute Multiplication row wise
-			sub[i] = mat_A[i] * mat_B[i];
-		}
-
-	}
-
-}
-
-// Division of a Matrix
-void* division(void* arg)
-{
-	int i;
-	int core = (int)arg;
-
-	// Each thread computes 1/4th of matrix Division
-	for (i = core * MAX / 4; i < (core + 1) * MAX / 4; i++) 
-    {
-		for (j = 0; j < MAX; j++) 
-        {
-			// Compute Division row wise
-			sub[i] = mat_A[i] / mat_B[i];
-		}
-
-	}
-
-}
-
-// Driver Code
 int main()
-{
-	int i, j, step = 0;
+{    
+    // Initializing All Defined Matrices By Zero - - - - - - - - - - - - - - -//
+    for(int x=0;x<10;x++){
+        for(int y=0;y<10;y++){
+            matrix1[x][y] = 0;
+            matrix2[x][y] = 0;
+            result[x][y] = 0;
+        }
+    }
+    
+    
+    //Getting Matrix1 And Matrix2 Info from User - - - - - - - - - - - - - - -//
+    
+    printf(" --- Defining Matrix 1 ---\n\n");
+    
+    // Getting Row And Column(Same As Row In Matrix2) Number For Matrix1
+    printf("Enter number of rows for matrix 1: ");
+    scanf("%d",&i);
+    printf("Enter number of columns for matrix 1: ");
+    scanf("%d",&j);
+    
+    printf("\n --- Initializing Matrix 1 ---\n\n");
+    for(int x=0;x<i;x++){
+        for(int y=0;y<j;y++){
+            printf("Enter variable [%d,%d]: ",x+1,y+1);
+            scanf("%d",&matrix1[x][y]);
+        }
+    }
+    
+    printf("\n --- Defining Matrix 2 ---\n\n");
 
-	// Generating values in mat_A and mat_B
-	for (i = 0; i < MAX; i++) 
-    {
-		mat_A[i] = 1;
-		mat_B[i] = 2;
-	}
-
-
-	// Displaying mat_A
-	printf("\nMatrix A:\n");
-
-	for (i = 0; i < MAX; i++) 
-    {
-		for (j = 0; j < MAX; j++) 
-        {
-
-			printf("%d ", mat_A[i]);
-		}
-
-		printf("\n");
-	}
-
-	// Displaying mat_B
-	printf("\nMatrix B:\n");
-
-	for (i = 0; i < MAX; i++) 
-    {
-		for (j = 0; j < MAX; j++) 
-        {
-			printf("%d ", mat_B[i]);
-		}
-
-		printf("\n");
-	}
-
-	// Creating threads equal
-	// to core size and compute matrix row
-	for (i = 0; i < CORE; i++) 
-    {
-
-		pthread_create(&thread[i], NULL, &addition, (void*)step);
-		pthread_create(&thread[i + CORE], NULL, &subtraction, (void*)step);
-		step++;
-	}
-
-	// Waiting for join threads after compute
-	for (i = 0; i < CORE * 2; i++) 
-    {
-		pthread_join(thread[i], NULL);
-	}
-
-	// Display Addition of mat_A and mat_B
-	printf("\n Sum of Matrix A and B:\n");
-
-	for (i = 0; i < MAX; i++) 
-    {
-		for (j = 0; j < MAX; j++) 
-        {
-			printf("%d ", sum[i]);
-		}
-
-		printf("\n");
-	}
-
-	// Display Subtraction of mat_A and mat_B
-	printf("\n Subtraction of Matrix A and B:\n");
-
-	for (i = 0; i < MAX; i++) 
-    {
-		for (j = 0; j < MAX; j++) 
-        {
-			printf("%d ", sub[i]);
-		}
-
-		printf("\n");
-	}
-
-	return 0;
+    // Getting Column Number For Matrix2
+    printf("Number of rows for matrix 2 : %d\n",j);
+    printf("Enter number of columns for matrix 2: ");
+    scanf("%d",&k);
+    
+    printf("\n --- Initializing Matrix 2 ---\n\n");
+    for(int x=0;x<j;x++){
+        for(int y=0;y<k;y++){
+            printf("Enter variable [%d,%d]: ",x+1,y+1);
+            scanf("%d",&matrix2[x][y]);
+        }
+    }
+    
+    
+    //Printing Matrices - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+    
+    printf("\n --- Matrix 1 ---\n\n");
+    for(int x=0;x<i;x++){
+        for(int y=0;y<j;y++){
+            printf("%5d",matrix1[x][y]);
+        }
+        printf("\n\n");
+    }
+    
+    printf(" --- Matrix 2 ---\n\n");
+    for(int x=0;x<j;x++){
+        for(int y=0;y<k;y++){
+            printf("%5d",matrix2[x][y]);
+        }
+        printf("\n\n");
+    }
+    
+    
+    //Multiply Matrices Using Threads - - - - - - - - - - - - - - - - - - - -//
+    
+    //Defining Threads
+    pthread_t thread[MAX_THREADS];
+    
+    //Counter For Thread Index
+    int thread_number = 0;
+    
+    //Defining p For Passing Parameters To Function As Struct
+    args p[i*k];
+    
+    //Start Timer
+    time_t start = time(NULL);
+    
+    for(int x=0;x<i;x++)
+	{
+        for(int y=0;y<k;y++)
+		{    
+            //Initializing Parameters For Passing To Function
+            p[thread_number].x=x;
+            p[thread_number].y=y;
+            
+            //Status For Checking Errors
+            int status;
+            
+            //Create Specific Thread For Each Element In Result Matrix
+            status = pthread_create(&thread[thread_number], NULL, mult, (void *) &p[thread_number]);
+            
+            //Check For Error
+            if(status!=0){
+                printf("Error In Threads");
+                exit(0);
+            }
+            
+            thread_number++;
+        }
+    }
+    
+    
+    //Wait For All Threads Done - - - - - - - - - - - - - - - - - - - - - - //
+    
+    for(int z=0;z<(i*k);z++)
+        pthread_join(thread[z],NULL );
+    
+    
+    //Print Multiplied Matrix (Result) - - - - - - - - - - - - - - - - - - -//
+    
+    printf(" --- Multiplied Matrix ---\n\n");
+    for(int x=0;x<i;x++){
+        for(int y=0;y<k;y++){
+            printf("%5d",result[x][y]);
+        }
+        printf("\n\n");
+    }
+    
+    
+    //Calculate Total Time Including 3 Soconds Sleep In Each Thread - - - -//
+    
+    printf(" ---> Time Elapsed : %.2f Sec\n\n", (double)(time(NULL) - start));
+    
+    
+    //Total Threads Used In Process - - - - - - - - - - - - - - - - - - - -//
+    
+    printf(" ---> Used Threads : %d \n\n",thread_number);
+    for(int z=0;z<thread_number;z++)
+        printf(" - Thread %d ID : %d\n",z+1,(int)thread[z]);
+    
+    return 0;
 }

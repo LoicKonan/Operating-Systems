@@ -1,1 +1,1 @@
-ARR_SIZE
+MAX
