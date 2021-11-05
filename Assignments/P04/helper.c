@@ -72,22 +72,19 @@ int main(int argc, char *argv[])
         Arr_B[i] = 2;
     }
 
-    for (t = 0; t < NUM_THREADS; ++t)
+    for (t = 0; t < NUM_THREADS; ++t)                   // Create Threads 
     {
         rc = pthread_create(&thread_ids[t], &attr, Operation, (void *)t); 
     }
 
-    for (size_t i = 0; i < NUM_THREADS ; i++)
+    
+    for (size_t i = 0; i < NUM_THREADS ; i++)           // Wait For All Threads Done 
     {
          pthread_join(thread_ids[i], NULL);
     }
-    
-    // pthread_join(thread_ids[0], NULL);
-    // pthread_join(thread_ids[1], NULL);
-    // pthread_join(thread_ids[2], NULL);
-    // pthread_join(thread_ids[3], NULL);
 
-    printf("Sum summation is: %f\n", Add_Sum);
+
+    printf("Sum summation is: %f\n", Add_Sum);          // Display  Result
     printf("Sub summation is: %f\n", Sub_Sum);
     printf("Mul summation is: %f\n", Mul_Sum);
     printf("Div summation is: %f\n", Div_Sum);
