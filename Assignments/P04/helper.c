@@ -16,7 +16,7 @@
 #include <pthread.h>
 
 #define NUM_THREADS 4
-#define ARR_SIZE 10
+#define ARR_SIZE 5
 
 void *CalculateSum(void *);
 pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
@@ -65,9 +65,8 @@ void *CalculateSum(void *dummyPtr)
 	{
 		Arr_Mul[i] = Arr_A[i] * Arr_B[i];
 		Mul_Sum += Arr_Mul[i];
-
-    printf("Mul summation is: %f\n", Mul_Sum);
 	}
+    printf("Mul summation is: %f\n", Mul_Sum);
 
 	pthread_mutex_unlock(&mutex1);
 }
