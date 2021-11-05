@@ -17,7 +17,7 @@
 #include <stdlib.h>
 
 #define NUM_THREADS 4		// Defining 4 threads
-#define ARR_SIZE 1000000
+#define ARR_SIZE 5
 
 int Arr_A[ARR_SIZE];
 int Arr_B[ARR_SIZE];
