@@ -17,15 +17,10 @@
 #include <stdlib.h>
 
 #define NUM_THREADS 4 // Defining 4 threads
-#define ARR_SIZE 1000000
+#define ARR_SIZE 4
 
 int Arr_A[ARR_SIZE];
 int Arr_B[ARR_SIZE];
-
-int Arr_Sum[ARR_SIZE];
-int Arr_Sub[ARR_SIZE];
-int Arr_Mul[ARR_SIZE];
-double Arr_Div[ARR_SIZE];
 
 double Add_Sum = 0;
 double Sub_Sum = 0;
@@ -61,7 +56,6 @@ int main(int argc, char *argv[])
 
     /* Initialize and set thread detached attribute */
     pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
     // Initialize Array Data for both A and B
     for (int i = 0; i < ARR_SIZE; i++)
@@ -85,27 +79,26 @@ int main(int argc, char *argv[])
 
     for (size_t i = 0; i < NUM_THREADS; i++) // Joining and waiting for all threads to complete
     {
-        // pthread_join(thread_ids[i], NULL);
         rc = pthread_join(thread_ids[i], &status);
         if (rc)
         {
             printf("ERROR; return code from pthread_join() is %d\n", rc);
             exit(-1);
         }
-        printf("Main: completed join with thread %ld having a status of %ld\n", t, (long)status);
     }
 
-    // printf("\n --- Matrix ---\n\n");
-    // printf("\n -- A    B ---\n\n");
+    printf("\n --- Matrix ---\n\n");
+    printf("\n -- A    B ---\n\n");
 
-    // for(int x = 0; x < ARR_SIZE; x++)
-    // {
-    //     printf("%5d",Arr_A[x]);
-    //     printf("%5d",Arr_B[x]);
-    //     printf("\n\n");
-    // }
+    for(int x = 0; x < ARR_SIZE; x++)
+    {
+        printf("%5d",Arr_A[x]);
+        printf("%5d",Arr_B[x]);
+        printf("\n\n");
+    }
+
     // Displaying the result matrix
-    printf("Addition summation is:       %f\n", Add_Sum);
+    printf("\nAddition summation is:       %f\n", Add_Sum);
     printf("Susbtraction  summation is: %f\n", Sub_Sum);
     printf("Multipliaction summation is: %f\n", Mul_Sum);
     printf("Division summation is:       %f\n", Div_Sum);
