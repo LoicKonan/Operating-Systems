@@ -33,7 +33,6 @@ double Mul_Sum = 0;
 double Div_Sum = 0;
 
 
-
 void *DoStuff(void *t)
 {
     long t_id;

@@ -80,12 +80,13 @@ void *DoStuff(void *t)
 		Arr_Sub[i] = Arr_A[i] - Arr_B[i];
 		Sub_Sum += Arr_Sub[i];
 
-		Arr_Mul[i] = Arr_A[i] * Arr_B[i];
-		Mul_Sum += Arr_Mul[i];
+		// Arr_Mul[i] = Arr_A[i] * Arr_B[i];
+		Mul_Sum += Arr_A[i] * Arr_B[i];;
 
 		Arr_Div[i] = (double)Arr_A[i] / (double)Arr_B[i];
 		Div_Sum += Arr_Div[i];
 	}
+
 		pthread_mutex_unlock(&mutex1);
 }
 
