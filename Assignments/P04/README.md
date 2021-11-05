@@ -27,9 +27,10 @@
 
 ### Files
 
-|   #   | File                 | Description |
-| :---: | -------------------- | ----------- |
-|   1   | [main.c](main.c)     | Solution    |
+|   #   | File                               | Description |
+| :---: | ---------------------------------- | ----------- |
+|   1   | [main.c](main.c)                   | Solution    |
+|   1   | [Calculation.cpp](Calculation.cpp) | Solution    |
 
 ### Sources
 
