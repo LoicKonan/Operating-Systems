@@ -105,7 +105,9 @@
 
 // Maximum threads is equal to total core of system
 pthread_t thread[CORE];
-int mat_A[MAX], mat_B[MAX], sum[MAX], sub[MAX];
+int mat_A[MAX], mat_B[MAX];
+int sub = 0;
+int sum = 0;
 
 // Addition of a Matrix
 void *addition(void *arg)
@@ -114,15 +116,10 @@ void *addition(void *arg)
     int i, j;
     int core = (int)arg;
 
-    // Each thread computes 1/4th of matrix addition
-    for (i = core ; i < core ; i++)
+    for (i = MAX; i < MAX; i++)
     {
-
-        for (j = 0; j < MAX; j++)
-        {
-            // Compute Sum Row wise
-            sum[i] = mat_A[i] + mat_B[i];
-        }
+        // Compute Sum 
+        sum = mat_A[i] + mat_B[i];
     }
 }
 
@@ -133,26 +130,20 @@ void *subtraction(void *arg)
     int i, j;
     int core = (int)arg;
 
-    // Each thread computes 1/4th of matrix subtraction
-    for (i = core ; i < core ; i++)
+    for (i = MAX; i < MAX; i++)
     {
-        for (j = 0; j < MAX; j++)
-        {
-            // Compute Subtract row wise
-            sub[i] = mat_A[i] - mat_B[i];
-        }
+        // Compute Subtract 
+        sub = mat_A[i] - mat_B[i];
     }
 }
 
 // Driver Code
 int main()
 {
-
     int i, j, step = 0;
     // values in mat_A and mat_B
     for (i = 0; i < MAX; i++)
     {
-
         mat_A[i] = 1;
         mat_B[i] = 2;
     }
@@ -172,7 +163,6 @@ int main()
     // to core size and compute matrix row
     for (i = 0; i < CORE; i++)
     {
-
         pthread_create(&thread[i], NULL, &addition, (void *)step);
         pthread_create(&thread[i + CORE], NULL, &subtraction, (void *)step);
         step++;
@@ -181,29 +171,18 @@ int main()
     // Waiting for join threads after compute
     for (i = 0; i < CORE; i++)
     {
-
         pthread_join(thread[i], NULL);
     }
 
     // Display Addition of mat_A and mat_B
     printf("\n Sum of Matrix A and B:\n");
-
-    for (i = 0; i < MAX; i++)
-    {
-        printf("%d ", sum[i]);
-
-        printf("\n");
-    }
+    printf("%d ", sum);
+    printf("\n");
 
     // Display Subtraction of mat_A and mat_B
     printf("\n Subtraction of Matrix A and B:\n");
-
-    for (i = 0; i < MAX; i++)
-    {
-        printf("%d ", sub[i]);
-
-        printf("\n");
-    }
+    printf("%d ", sub);
+    printf("\n");
 
     return 0;
 }
