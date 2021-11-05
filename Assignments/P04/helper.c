@@ -1,4 +1,16 @@
-//program.c
+/*
+	Name/s: Loic Konan & Byron Dowling
+	Class: 5133 Advanced Computer Architecture
+	Date: 11/3/2021
+	Assignment: Homework #5 Pthreads Programming
+	
+	Details:
+		- Perform the Addition of A + B
+        - Perform the Difference of A - B
+        - Perform the Product of A * B
+        - Perform the Quotient of A / B
+
+*/
 
 #include <stdio.h>
 #include <pthread.h>
