@@ -32,7 +32,6 @@ double Sub_Sum = 0;
 double Mul_Sum = 0;
 double Div_Sum = 0;
 
-pthread_mutex_t mutexsum;       // add a Muttex.
 
 
 void *DoStuff(void *t)
