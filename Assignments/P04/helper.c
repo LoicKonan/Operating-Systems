@@ -21,8 +21,6 @@
 void *CalculateSum(void *);
 pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 
-int dimensional_array[ARR_SIZE];
-
 int Arr_A[ARR_SIZE];
 int Arr_B[ARR_SIZE];
 
