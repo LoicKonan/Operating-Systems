@@ -65,7 +65,6 @@ main()
 	printf("Mul summation is: %f\n", Mul_Sum);
 }
 
-
 // Calculate
 void *DoStuff(void *dummyPtr)
 {
@@ -73,6 +72,9 @@ void *DoStuff(void *dummyPtr)
 
 	for (int i = 0; i < ARR_SIZE; i++)
 	{
+		printf("Arr_A[i] is: %f\n", Arr_A[i]);
+		printf("Arr_B[i] is: %f\n", Arr_B[i]);
+
 		Arr_Mul[i] = Arr_A[i] * Arr_B[i];
 		Mul_Sum += Arr_Mul[i];
 	}
