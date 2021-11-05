@@ -16,7 +16,7 @@
 #include <pthread.h>
 
 #define NUM_THREADS 4
-#define ARR_SIZE 5
+#define ARR_SIZE 2
 
 void *DoStuff(void *);
 pthread_mutex_t mutex1;
@@ -71,14 +71,6 @@ main()
         Arr_B[i] = 2;
     }
 
-    // print ARRAY
-    for (int i = 0; i < ARR_SIZE; i++)
-    {
-        printf("%d\t", Arr_A[i]);
-        printf("%d\t", Arr_B[i]);
-        printf("\n");
-    }
-    
     for (int i = 0; i < NUM_THREADS; i++)
     {
         pthread_create(&thread_ids[i], NULL, DoStuff, NULL);
