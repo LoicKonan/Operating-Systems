@@ -17,7 +17,7 @@
 #include <stdlib.h>
 
 #define NUM_THREADS 4 // Defining 4 threads
-#define ARR_SIZE 1000000
+#define ARR_SIZE 4
 
 int Arr_A[ARR_SIZE];
 int Arr_B[ARR_SIZE];
@@ -29,10 +29,9 @@ double Div_Sum = 0;
 
 void *Operation(void *t)
 {
-    intptr_t  t_id = (intptr_t)t;        // unsigned long long size_t
-    // t_id = ((long)t + 1);
+    intptr_t  t_id = (intptr_t)t;        // long long intptr_t
 
-    for (int i = (t_id  * ARR_SIZE) / 4; i < (t_id + 1) * ARR_SIZE / 4); i++)
+    for (int i = (t_id  * ARR_SIZE) / 4; i < (t_id + 1) * ARR_SIZE / 4; i++)
     {
         Add_Sum += Arr_A[i] + Arr_B[i];
 
