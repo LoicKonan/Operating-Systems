@@ -9,7 +9,7 @@
 #define MAX 4
 
 // Maximum threads is equal to total core of system
-pthread_t thread[CORE * 2];
+pthread_t thread[MAX];
 int mat_A[MAX], mat_B[MAX], sum[MAX], sub[MAX], mul[MAX], div[MAX];
 
 // Addition of a Matrix
