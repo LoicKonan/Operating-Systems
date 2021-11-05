@@ -29,10 +29,10 @@ double Div_Sum = 0;
 
 void *Operation(void *t)
 {
-    size_t t_id; // unsigned long long size_t
-    t_id = ((long)t + 1);
+    intptr_t  t_id = (intptr_t)t;        // unsigned long long size_t
+    // t_id = ((long)t + 1);
 
-    for (int i = ((t_id - 1) * ARR_SIZE / 4); i < (t_id * ARR_SIZE / 4); i++)
+    for (int i = (t_id  * ARR_SIZE) / 4; i < (t_id + 1) * ARR_SIZE / 4); i++)
     {
         Add_Sum += Arr_A[i] + Arr_B[i];
 
