@@ -16,7 +16,7 @@
 #include <pthread.h>
 
 #define NUM_THREADS 4
-#define ARR_SIZE 1000000
+#define ARR_SIZE 5
 
 void *DoStuff(void *);
 pthread_mutex_t mutex1;
@@ -34,20 +34,6 @@ double Sub_Sum = 0;
 double Mul_Sum = 0;
 double Div_Sum = 0;
 
-// // Calculate
-// void *DoStuff(void *dummyPtr)
-// {
-// 	pthread_mutex_lock(&mutex1);
-
-// 	for (int i = 0; i < ARR_SIZE; i++)
-// 	{
-// 		Arr_Mul[i] = Arr_A[i] * Arr_B[i];
-// 		Mul_Sum += Arr_Mul[i];
-// 	}
-// 	pthread_mutex_unlock(&mutex1);
-// }
-
-
 void *DoStuff(void *t)
 {
     long t_id;
@@ -64,42 +50,14 @@ void *DoStuff(void *t)
         Arr_Mul[i] = Arr_A[i] * Arr_B[i];
         Mul_Sum += Arr_Mul[i];
 
-        Arr_Div[i] = (double)Arr_A[i] / (double)Arr_B[i]; 
+        Arr_Div[i] = (double)Arr_A[i] / (double)Arr_B[i];
         Div_Sum += Arr_Div[i];
     }
-
 }
 
 main()
 {
-	// pthread_t thread_id[NUM_THREADS];
-
-	// for (int i = 0; i < ARR_SIZE; i++)
-	// {
-	// 	Arr_A[i] = 1;
-	// 	Arr_B[i] = 2;
-	// }
-
-	// for (int i = 0; i < NUM_THREADS; i++)
-	// {
-	// 	pthread_create(&thread_id[i], NULL, DoStuff, NULL);
-	// }
-
-	// for (int i = 0; i < NUM_THREADS; i++)
-	// {
-	// 	pthread_join(thread_id[i], NULL);
-	// }
-
-	// // print ARRAY
-	// for (int i = 0; i < ARR_SIZE; i++)
-	// {
-	// 	printf("%d\t", Arr_A[i]);
-	// 	printf("%d\t", Arr_B[i]);
-	// 	printf("\n");
-	// }
-
-	// printf("Mul summation is: %f\n", Mul_Sum);
-	pthread_t thread_ids[NUM_THREADS];
+    pthread_t thread_ids[NUM_THREADS];
 
     pthread_attr_t attr;
     int rc;
@@ -117,20 +75,35 @@ main()
         Arr_B[i] = 2;
     }
 
-    for (t = 0; t < NUM_THREADS; ++t)
+    // print ARRAY
+    for (int i = 0; i < ARR_SIZE; i++)
     {
-        rc = pthread_create(&thread_ids[t], &attr, DoStuff, (void *)t); 
+        printf("%d\t", Arr_A[i]);
+        printf("%d\t", Arr_B[i]);
+        printf("\n");
+    }
+    
+    for (int i = 0; i < NUM_THREADS; i++)
+    {
+        pthread_create(&thread_ids[i], NULL, DoStuff, NULL);
     }
 
-    pthread_join(thread_ids[0], NULL);
-    pthread_join(thread_ids[1], NULL);
-    pthread_join(thread_ids[2], NULL);
-    pthread_join(thread_ids[3], NULL);
+    for (int i = 0; i < NUM_THREADS; i++)
+    {
+        pthread_join(thread_ids[i], NULL);
+    }
 
+    // print ARRAY
+    for (int i = 0; i < ARR_SIZE; i++)
+    {
+        printf("%d\t", Arr_A[i]);
+        printf("%d\t", Arr_B[i]);
+        printf("\n");
+    }
     printf("Sum summation is: %f\n", Add_Sum);
     printf("Sub summation is: %f\n", Sub_Sum);
     printf("Mul summation is: %f\n", Mul_Sum);
     printf("Div summation is: %f\n", Div_Sum);
-    
+
     pthread_exit(NULL);
 }

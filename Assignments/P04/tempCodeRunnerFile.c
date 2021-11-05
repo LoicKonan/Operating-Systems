@@ -1,1 +1,0 @@
-ARR_SIZE
