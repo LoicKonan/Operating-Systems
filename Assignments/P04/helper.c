@@ -16,7 +16,7 @@
 #include <pthread.h>
 
 #define NUM_THREADS 4
-#define ARR_SIZE 5
+#define ARR_SIZE 1000000
 
 void *DoStuff(void *);
 pthread_mutex_t mutex1;
@@ -72,32 +72,65 @@ void *DoStuff(void *t)
 
 main()
 {
-	pthread_t thread_id[NUM_THREADS];
+	// pthread_t thread_id[NUM_THREADS];
 
-	
-	for (int i = 0; i < ARR_SIZE; i++)
-	{
-		Arr_A[i] = 1;
-		Arr_B[i] = 2;
-	}
+	// for (int i = 0; i < ARR_SIZE; i++)
+	// {
+	// 	Arr_A[i] = 1;
+	// 	Arr_B[i] = 2;
+	// }
 
-	for (int i = 0; i < NUM_THREADS; i++)
-	{
-		pthread_create(&thread_id[i], NULL, DoStuff, NULL);
-	}
+	// for (int i = 0; i < NUM_THREADS; i++)
+	// {
+	// 	pthread_create(&thread_id[i], NULL, DoStuff, NULL);
+	// }
 
-	for (int i = 0; i < NUM_THREADS; i++)
-	{
-		pthread_join(thread_id[i], NULL);
-	}
+	// for (int i = 0; i < NUM_THREADS; i++)
+	// {
+	// 	pthread_join(thread_id[i], NULL);
+	// }
 
-	// print ARRAY
-	for (int i = 0; i < ARR_SIZE; i++)
-	{
-		printf("%d\t", Arr_A[i]);
-		printf("%d\t", Arr_B[i]);
-		printf("\n");
-	}
+	// // print ARRAY
+	// for (int i = 0; i < ARR_SIZE; i++)
+	// {
+	// 	printf("%d\t", Arr_A[i]);
+	// 	printf("%d\t", Arr_B[i]);
+	// 	printf("\n");
+	// }
 
-	printf("Mul summation is: %f\n", Mul_Sum);
+	// printf("Mul summation is: %f\n", Mul_Sum);
+	pthread_t thread_ids[NUM_THREADS];
+
+    pthread_attr_t attr;
+    int rc;
+    long t;
+    void *status;
+
+    /* Initialize and set thread detached attribute */
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+
+    // Initialize Array Data for both A and B
+    for (int i = 0; i < ARR_SIZE; i++)
+    {
+        Arr_A[i] = 1;
+        Arr_B[i] = 2;
+    }
+
+    for (t = 0; t < NUM_THREADS; ++t)
+    {
+        rc = pthread_create(&thread_ids[t], &attr, DoStuff, (void *)t); 
+    }
+
+    pthread_join(thread_ids[0], NULL);
+    pthread_join(thread_ids[1], NULL);
+    pthread_join(thread_ids[2], NULL);
+    pthread_join(thread_ids[3], NULL);
+
+    printf("Sum summation is: %f\n", Add_Sum);
+    printf("Sub summation is: %f\n", Sub_Sum);
+    printf("Mul summation is: %f\n", Mul_Sum);
+    printf("Div summation is: %f\n", Div_Sum);
+    
+    pthread_exit(NULL);
 }
