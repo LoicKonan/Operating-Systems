@@ -34,10 +34,47 @@ double Sub_Sum = 0;
 double Mul_Sum = 0;
 double Div_Sum = 0;
 
+// // Calculate
+// void *DoStuff(void *dummyPtr)
+// {
+// 	pthread_mutex_lock(&mutex1);
+
+// 	for (int i = 0; i < ARR_SIZE; i++)
+// 	{
+// 		Arr_Mul[i] = Arr_A[i] * Arr_B[i];
+// 		Mul_Sum += Arr_Mul[i];
+// 	}
+// 	pthread_mutex_unlock(&mutex1);
+// }
+
+
+void *DoStuff(void *t)
+{
+    long t_id;
+    t_id = ((long)t + 1);
+
+    for (int i = ((t_id - 1) * ARR_SIZE); i < (t_id * ARR_SIZE - 1); i++)
+    {
+        Arr_Sum[i] = Arr_A[i] + Arr_B[i];
+        Add_Sum += Arr_Sum[i];
+
+        Arr_Sub[i] = Arr_A[i] - Arr_B[i];
+        Sub_Sum += Arr_Sub[i];
+
+        Arr_Mul[i] = Arr_A[i] * Arr_B[i];
+        Mul_Sum += Arr_Mul[i];
+
+        Arr_Div[i] = (double)Arr_A[i] / (double)Arr_B[i]; 
+        Div_Sum += Arr_Div[i];
+    }
+
+}
+
 main()
 {
 	pthread_t thread_id[NUM_THREADS];
 
+	
 	for (int i = 0; i < ARR_SIZE; i++)
 	{
 		Arr_A[i] = 1;
@@ -63,20 +100,4 @@ main()
 	}
 
 	printf("Mul summation is: %f\n", Mul_Sum);
-}
-
-// Calculate
-void *DoStuff(void *dummyPtr)
-{
-	pthread_mutex_lock(&mutex1);
-
-	for (int i = 0; i < ARR_SIZE; i++)
-	{
-		printf("Arr_A[i] is: %f\n", Arr_A[i]);
-		printf("Arr_B[i] is: %f\n", Arr_B[i]);
-
-		Arr_Mul[i] = Arr_A[i] * Arr_B[i];
-		Mul_Sum += Arr_Mul[i];
-	}
-	pthread_mutex_unlock(&mutex1);
 }

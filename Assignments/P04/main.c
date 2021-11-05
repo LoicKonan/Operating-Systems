@@ -38,7 +38,7 @@ void *DoStuff(void *t)
     long t_id;
     t_id = ((long)t + 1);
 
-    for (int i = ((t_id - 1) * 250000); i < (t_id * 250000 - 1); i++)
+    for (int i = ((t_id - 1) * 5); i < (t_id * 5 - 1); i++)
     {
         Arr_Sum[i] = Arr_A[i] + Arr_B[i];
         Add_Sum += Arr_Sum[i];
