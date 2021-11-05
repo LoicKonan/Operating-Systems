@@ -23,6 +23,7 @@ pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 
 int Arr_A[ARR_SIZE];
 int Arr_B[ARR_SIZE];
+int Arr_Mul[ARR_SIZE];
 
 double Mul_Sum = 0;
 
@@ -61,8 +62,10 @@ void *CalculateSum(void *dummyPtr)
 
 	for (int i = 0; i < ARR_SIZE; i++)
 	{
-		Mul_Sum += Arr_A[i] * Arr_B[i];
-		printf(" Mul_Sum = %d\n", Mul_Sum);
+		Arr_Mul[i] = Arr_A[i] * Arr_B[i];
+		Mul_Sum += Arr_Mul[i];
+
+    printf("Mul summation is: %f\n", Mul_Sum);
 	}
 
 	pthread_mutex_unlock(&mutex1);
