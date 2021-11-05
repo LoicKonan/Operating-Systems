@@ -93,11 +93,11 @@ int main(int argc, char *argv[])
     //     printf("%5d",Arr_B[x]);
     //     printf("\n\n");
     // }
-    
-    printf("Sum summation is: %f\n", Add_Sum);          // Displaying the result matrix
-    printf("Sub summation is: %f\n", Sub_Sum);
-    printf("Mul summation is: %f\n", Mul_Sum);
-    printf("Div summation is: %f\n", Div_Sum);
+                                                         // Displaying the result matrix
+    printf("Addition summation is:       %f\n", Add_Sum);  
+    printf("Susbtraction  summation is: %f\n",  Sub_Sum);
+    printf("Multipliaction summation is: %f\n", Mul_Sum);
+    printf("Division summation is:       %f\n", Div_Sum);
     
     pthread_exit(NULL);
 }
