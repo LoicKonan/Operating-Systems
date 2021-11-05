@@ -17,7 +17,7 @@
 #include <stdlib.h>
 
 #define NUM_THREADS 4		// Defining 4 threads
-#define ARR_SIZE 1000000
+#define ARR_SIZE 4
 
 int Arr_A[ARR_SIZE];
 int Arr_B[ARR_SIZE];
@@ -83,7 +83,15 @@ int main(int argc, char *argv[])
          pthread_join(thread_ids[i], NULL);
     }
 
+    printf("\n --- Matrix ---\n\n");
+    printf("\n -- A    B ---\n\n");
 
+    for(int x = 0; x < ARR_SIZE; x++)
+    {
+        printf("%5d",Arr_A[x]);
+        printf("%5d",Arr_B[x]);
+        printf("\n\n");
+    }
     printf("Sum summation is: %f\n", Add_Sum);          // Display  Result
     printf("Sub summation is: %f\n", Sub_Sum);
     printf("Mul summation is: %f\n", Mul_Sum);
