@@ -55,7 +55,8 @@ main()
 		printf("\n");
 	}
 }
-//Calculate
+
+// Calculate
 void *CalculateSum(void *dummyPtr)
 {
 	pthread_mutex_lock(&mutex1);
