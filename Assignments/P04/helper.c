@@ -17,7 +17,7 @@
 #include <stdlib.h>
 
 #define NUM_THREADS 4		// Defining 4 threads
-#define ARR_SIZE 4
+#define ARR_SIZE 1000000
 
 int Arr_A[ARR_SIZE];
 int Arr_B[ARR_SIZE];
@@ -65,6 +65,7 @@ int main(int argc, char *argv[])
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
+
     // Initialize Array Data for both A and B
     for (int i = 0; i < ARR_SIZE; i++)
     {
@@ -72,27 +73,28 @@ int main(int argc, char *argv[])
         Arr_B[i] = 2;
     }
 
-    for (t = 0; t < NUM_THREADS; ++t)                   // Create Threads 
+    for (t = 0; t < NUM_THREADS; ++t)                    // Creating four threads, each evaluating its own part 
     {
         rc = pthread_create(&thread_ids[t], &attr, Operation, (void *)t); 
     }
 
     
-    for (size_t i = 0; i < NUM_THREADS ; i++)           // Wait For All Threads Done 
+    for (size_t i = 0; i < NUM_THREADS ; i++)           // Joining and waiting for all threads to complete 
     {
          pthread_join(thread_ids[i], NULL);
     }
 
-    printf("\n --- Matrix ---\n\n");
-    printf("\n -- A    B ---\n\n");
+    // printf("\n --- Matrix ---\n\n");
+    // printf("\n -- A    B ---\n\n");
 
-    for(int x = 0; x < ARR_SIZE; x++)
-    {
-        printf("%5d",Arr_A[x]);
-        printf("%5d",Arr_B[x]);
-        printf("\n\n");
-    }
-    printf("Sum summation is: %f\n", Add_Sum);          // Display  Result
+    // for(int x = 0; x < ARR_SIZE; x++)
+    // {
+    //     printf("%5d",Arr_A[x]);
+    //     printf("%5d",Arr_B[x]);
+    //     printf("\n\n");
+    // }
+    
+    printf("Sum summation is: %f\n", Add_Sum);          // Displaying the result matrix
     printf("Sub summation is: %f\n", Sub_Sum);
     printf("Mul summation is: %f\n", Mul_Sum);
     printf("Div summation is: %f\n", Div_Sum);
