@@ -1,109 +1,209 @@
-/*
-	Name/s: Loic Konan & Byron Dowling
-	Class: 5133 Advanced Computer Architecture
-	Date: 11/3/2021
-	Assignment: Homework #5 Pthreads Programming
-	
-	Details:
-		- Perform the Addition of A + B
-        - Perform the Difference of A - B
-        - Perform the Product of A * B
-        - Perform the Quotient of A / B
+// /*
+// 	Name/s: Loic Konan & Byron Dowling
+// 	Class: 5133 Advanced Computer Architecture
+// 	Date: 11/3/2021
+// 	Assignment: Homework #5 Pthreads Programming
 
-*/
+// 	Details:
+// 		- Perform the Addition of A + B
+//         - Perform the Difference of A - B
+//         - Perform the Product of A * B
+//         - Perform the Quotient of A / B
 
-#include <stdio.h>
+// */
+
+// #include <stdio.h>
+// #include <pthread.h>
+
+// #define NUM_THREADS 4
+// #define ARR_SIZE 2
+
+// void *DoStuff(void *);
+// pthread_mutex_t mutex1;
+
+// int Arr_A[ARR_SIZE];
+// int Arr_B[ARR_SIZE];
+
+// int Arr_Sum[ARR_SIZE];
+// int Arr_Sub[ARR_SIZE];
+// int Arr_Mul[ARR_SIZE];
+// double Arr_Div[ARR_SIZE];
+
+// double Add_Sum = 0;
+// double Sub_Sum = 0;
+// double Mul_Sum = 0;
+// double Div_Sum = 0;
+
+// void *DoStuff(void *t)
+// {
+//     long t_id;
+//     t_id = ((long)t + 1);
+
+//     for (int i = ((t_id - 1) * ARR_SIZE); i < (t_id * ARR_SIZE - 1); i++)
+//     {
+//         Add_Sum += Arr_A[i] + Arr_B[i];
+//         Sub_Sum += Arr_A[i] - Arr_B[i];
+//         Mul_Sum += Arr_A[i] * Arr_B[i];
+//         Div_Sum += (double)Arr_A[i] / (double)Arr_B[i];
+//     }
+// }
+
+// main()
+// {
+//     pthread_t thread_ids[NUM_THREADS];
+
+//     pthread_attr_t attr;
+//     int rc;
+//     long t;
+//     void *status;
+
+//     /* Initialize and set thread detached attribute */
+//     pthread_attr_init(&attr);
+//     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+
+//     // Initialize Array Data for both A and B
+//     for (int i = 0; i < ARR_SIZE; i++)
+//     {
+//         Arr_A[i] = 1;
+//         Arr_B[i] = 2;
+//     }
+
+//     for (int i = 0; i < NUM_THREADS; i++)
+//     {
+//         pthread_create(&thread_ids[i], NULL, DoStuff, NULL);
+//     }
+
+//     for (int i = 0; i < NUM_THREADS; i++)
+//     {
+//         pthread_join(thread_ids[i], NULL);
+//     }
+
+//     // print ARRAY
+//     for (int i = 0; i < ARR_SIZE; i++)
+//     {
+//         printf("%d\t", Arr_A[i]);
+//         printf("%d\t", Arr_B[i]);
+//         printf("\n");
+//     }
+//     printf("Sum summation is: %f\n", Add_Sum);
+//     printf("Sub summation is: %f\n", Sub_Sum);
+//     printf("Mul summation is: %f\n", Mul_Sum);
+//     printf("Div summation is: %f\n", Div_Sum);
+
+//     pthread_exit(NULL);
+// }
+
 #include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define NUM_THREADS 4
-#define ARR_SIZE 5
+// Value depend on System core
+#define CORE 4
 
-void *DoStuff(void *);
-pthread_mutex_t mutex1;
+// Maximum matrix size
+#define MAX 4
 
-int Arr_A[ARR_SIZE];
-int Arr_B[ARR_SIZE];
+// Maximum threads is equal to total core of system
+pthread_t thread[CORE];
+int mat_A[MAX], mat_B[MAX], sum[MAX], sub[MAX];
 
-int Arr_Sum[ARR_SIZE];
-int Arr_Sub[ARR_SIZE];
-int Arr_Mul[ARR_SIZE];
-double Arr_Div[ARR_SIZE];
-
-double Add_Sum = 0;
-double Sub_Sum = 0;
-double Mul_Sum = 0;
-double Div_Sum = 0;
-
-void *DoStuff(void *t)
+// Addition of a Matrix
+void *addition(void *arg)
 {
-    long t_id;
-    t_id = ((long)t + 1);
 
-    for (int i = ((t_id - 1) * ARR_SIZE); i < (t_id * ARR_SIZE - 1); i++)
+    int i, j;
+    int core = (int)arg;
+
+    // Each thread computes 1/4th of matrix addition
+    for (i = core ; i < core ; i++)
     {
-        Arr_Sum[i] = Arr_A[i] + Arr_B[i];
-        Add_Sum += Arr_Sum[i];
 
-        Arr_Sub[i] = Arr_A[i] - Arr_B[i];
-        Sub_Sum += Arr_Sub[i];
-
-        Arr_Mul[i] = Arr_A[i] * Arr_B[i];
-        Mul_Sum += Arr_Mul[i];
-
-        Arr_Div[i] = (double)Arr_A[i] / (double)Arr_B[i];
-        Div_Sum += Arr_Div[i];
+        for (j = 0; j < MAX; j++)
+        {
+            // Compute Sum Row wise
+            sum[i] = mat_A[i] + mat_B[i];
+        }
     }
 }
 
-main()
+// Subtraction of a Matrix
+void *subtraction(void *arg)
 {
-    pthread_t thread_ids[NUM_THREADS];
 
-    pthread_attr_t attr;
-    int rc;
-    long t;
-    void *status;
+    int i, j;
+    int core = (int)arg;
 
-    /* Initialize and set thread detached attribute */
-    pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-
-    // Initialize Array Data for both A and B
-    for (int i = 0; i < ARR_SIZE; i++)
+    // Each thread computes 1/4th of matrix subtraction
+    for (i = core ; i < core ; i++)
     {
-        Arr_A[i] = 1;
-        Arr_B[i] = 2;
+        for (j = 0; j < MAX; j++)
+        {
+            // Compute Subtract row wise
+            sub[i] = mat_A[i] - mat_B[i];
+        }
+    }
+}
+
+// Driver Code
+int main()
+{
+
+    int i, j, step = 0;
+    // values in mat_A and mat_B
+    for (i = 0; i < MAX; i++)
+    {
+
+        mat_A[i] = 1;
+        mat_B[i] = 2;
     }
 
-    // print ARRAY
-    for (int i = 0; i < ARR_SIZE; i++)
+    // Displaying mat_A
+    printf("\nMatrix A and matrix B:\n");
+
+    for (i = 0; i < MAX; i++)
     {
-        printf("%d\t", Arr_A[i]);
-        printf("%d\t", Arr_B[i]);
+        printf("%d ", mat_A[i]);
+        printf("%d ", mat_B[i]);
+
         printf("\n");
     }
-    
-    for (int i = 0; i < NUM_THREADS; i++)
+
+    // Creating threads equal
+    // to core size and compute matrix row
+    for (i = 0; i < CORE; i++)
     {
-        pthread_create(&thread_ids[i], NULL, DoStuff, NULL);
+
+        pthread_create(&thread[i], NULL, &addition, (void *)step);
+        pthread_create(&thread[i + CORE], NULL, &subtraction, (void *)step);
+        step++;
     }
 
-    for (int i = 0; i < NUM_THREADS; i++)
+    // Waiting for join threads after compute
+    for (i = 0; i < CORE; i++)
     {
-        pthread_join(thread_ids[i], NULL);
+
+        pthread_join(thread[i], NULL);
     }
 
-    // print ARRAY
-    for (int i = 0; i < ARR_SIZE; i++)
+    // Display Addition of mat_A and mat_B
+    printf("\n Sum of Matrix A and B:\n");
+
+    for (i = 0; i < MAX; i++)
     {
-        printf("%d\t", Arr_A[i]);
-        printf("%d\t", Arr_B[i]);
+        printf("%d ", sum[i]);
+
         printf("\n");
     }
-    printf("Sum summation is: %f\n", Add_Sum);
-    printf("Sub summation is: %f\n", Sub_Sum);
-    printf("Mul summation is: %f\n", Mul_Sum);
-    printf("Div summation is: %f\n", Div_Sum);
 
-    pthread_exit(NULL);
+    // Display Subtraction of mat_A and mat_B
+    printf("\n Subtraction of Matrix A and B:\n");
+
+    for (i = 0; i < MAX; i++)
+    {
+        printf("%d ", sub[i]);
+
+        printf("\n");
+    }
+
+    return 0;
 }
