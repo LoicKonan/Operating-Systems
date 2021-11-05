@@ -18,7 +18,7 @@
 
 /**
  * 
- * Defined globally accessible variables:
+ *   Defined globally accessible variables:
  * 
  *  - Number of THREADS = 4 
  *  - Size of the Array = 1 000 000
@@ -44,7 +44,7 @@ double Mul_Sum = 0;
 double Div_Sum = 0;
 
 /**
- *  Implemeting all the operation in this function.
+ *    Implemeting all the operation in this function.
  *  - Initialize an Unsigned long long variable call t_id (thread ID).
  *  - Then use a for loop to do our operations.
  *  - Lock a mutex prior to updating the value in the shared structure.
