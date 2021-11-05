@@ -12,14 +12,12 @@
 
 */
 
-#include <stdio.h>
 #include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define NUM_THREADS 4
-#define ARR_SIZE 2
-
-void *DoStuff(void *);
-pthread_mutex_t mutex1;
+#define NUM_THREADS 4		// Defining 4 threads
+#define ARR_SIZE 1000000
 
 int Arr_A[ARR_SIZE];
 int Arr_B[ARR_SIZE];
@@ -34,24 +32,27 @@ double Sub_Sum = 0;
 double Mul_Sum = 0;
 double Div_Sum = 0;
 
+
 void *DoStuff(void *t)
 {
-    long t_id;
+    size_t t_id;                    // unsigned long long size_t
     t_id = ((long)t + 1);
 
-    for (int i = ((t_id - 1) * ARR_SIZE); i < (t_id * ARR_SIZE - 1); i++)
+    for (int i = ((t_id - 1) * ARR_SIZE/4); i < (t_id * ARR_SIZE/4 ); i++)
     {
-        Add_Sum += Arr_A[i] + Arr_B[i];
+        Add_Sum +=  Arr_A[i] + Arr_B[i];
 
-        Sub_Sum += Arr_A[i] - Arr_B[i];
+        Sub_Sum +=  Arr_A[i] - Arr_B[i];
 
-        Mul_Sum += Arr_A[i] * Arr_B[i];
+        Mul_Sum +=  Arr_A[i] + Arr_B[i];
 
         Div_Sum += (double)Arr_A[i] / (double)Arr_B[i];
     }
+
 }
 
-main()
+
+int main(int argc, char *argv[])
 {
     pthread_t thread_ids[NUM_THREADS];
 
@@ -71,27 +72,20 @@ main()
         Arr_B[i] = 2;
     }
 
-    for (int i = 0; i < NUM_THREADS; i++)
+    for (t = 0; t < NUM_THREADS; ++t)
     {
-        pthread_create(&thread_ids[i], NULL, DoStuff, NULL);
+        rc = pthread_create(&thread_ids[t], &attr, DoStuff, (void *)t); 
     }
 
-    for (int i = 0; i < NUM_THREADS; i++)
-    {
-        pthread_join(thread_ids[i], NULL);
-    }
+    pthread_join(thread_ids[0], NULL);
+    pthread_join(thread_ids[1], NULL);
+    pthread_join(thread_ids[2], NULL);
+    pthread_join(thread_ids[3], NULL);
 
-    // print ARRAY
-    for (int i = 0; i < ARR_SIZE; i++)
-    {
-        printf("%d\t", Arr_A[i]);
-        printf("%d\t", Arr_B[i]);
-        printf("\n");
-    }
     printf("Sum summation is: %f\n", Add_Sum);
     printf("Sub summation is: %f\n", Sub_Sum);
     printf("Mul summation is: %f\n", Mul_Sum);
     printf("Div summation is: %f\n", Div_Sum);
-
+    
     pthread_exit(NULL);
 }

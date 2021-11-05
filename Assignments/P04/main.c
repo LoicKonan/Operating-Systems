@@ -38,8 +38,7 @@ void *DoStuff(void *t)
     long t_id;
     t_id = ((long)t + 1);
 
-    // for (int i = ((t_id - 1) * 250000); i < (t_id * 250000 - 1); i++){
-    for (i = NUM_THREADS * ARR_SIZE; i < (NUM_THREADS + 1) * ARR_SIZE; i++) 
+    for (int i = ((t_id - 1) * ARR_SIZE); i < (t_id * ARR_SIZE - 1); i++)
     {
         Arr_Sum[i] = Arr_A[i] + Arr_B[i];
         Add_Sum += Arr_Sum[i];
