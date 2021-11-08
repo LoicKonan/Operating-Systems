@@ -1,11 +1,18 @@
-## Program 04 - Shared Memory Programing by using pthreads
+## Program 05 - More about pthreads
 
 ### Loic Konan
 
 ### Description
 >
+> - Pthread Creation and Termination
+> - Thread Argument Passing
+> - Joining
+> - Stack management
+> - Mutex = Mutex = Mutual Exclusion
+> - Mutexes
+> - Locking and Unlocking Mutexes
 >
-
+>
 ### Files
 
 |   #   | File                         | Description |
