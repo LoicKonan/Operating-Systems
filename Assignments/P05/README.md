@@ -12,6 +12,8 @@
 > - Mutexes
 > - Locking and Unlocking Mutexes
 >
+> <img src="pic.png">
+>
 >
 ### Files
 
