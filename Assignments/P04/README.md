@@ -29,4 +29,4 @@
 |   #   | File                               | Description  |
 | :---: | ---------------------------------- | ------------ |
 |   1   | [main.c](main.c)                   | Solution     |
-|   2   | [Calculation.cpp](calculation.cpp) | Calculations |
+|   2   | [Calculation.cpp](Calculation.cpp) | Calculations |
