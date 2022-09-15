@@ -1,8 +1,6 @@
 #include<iostream>
 using namespace std;
 
-
-
 /**
  * 
  * Defined globally accessible variables:
